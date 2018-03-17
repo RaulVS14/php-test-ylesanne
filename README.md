@@ -21,7 +21,7 @@ article with term "Tartu":
       "pageid": 31627,
       "size": 42974,
       "wordcount": 3554,
-      "snippet": "<span class=\"searchmatch\">Tartu</span> (Estonian pronunciation: [<span class=\"searchmatch\">ˈtɑrtˑu</span>], So"
+      "snippet": "<span class=\"searchmatch\">Tartu</span> (Estonian pronunciation: [<span class=\"searchmatch\">ˈtɑrtˑu</span>], So",
       "timestamp": "2018-03-09T17:23:41Z"
      }]
    }
@@ -29,7 +29,7 @@ article with term "Tartu":
 ```
 Notice the timestamp field, which says when the article was last edited.
 
-## Task
+## Task``````
 Your goal is to create a PHP program to retrieve all search results for term "Tartu" from Wikipedia and synchronize them into some local storage on a remote machine.
 You will create two programs:
 * a script that retrieves search results from Wikipedia and transmits them to the remote machine.
