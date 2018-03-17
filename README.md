@@ -35,8 +35,9 @@ You will create two programs:
 * a script that retrieves search results from Wikipedia and transmits them to the remote machine.
 * an API which stores the search results locally; The API should expose the functionality: 
   * to save newly found articles
-   * to update articles which have been changed on Wikipedia since the last synchronization (Look at the timestamp) It is up to you to          decide whether to split those functionalities or to provide a single endpoint for them.
-   
+   * to update articles which have been changed on Wikipedia since the last synchronization (Look at the timestamp) 
+
+It is up to you to decide whether to split those functionalities or to provide a single endpoint for them.   
 On the API side you can store article descriptions in a simple json file or in SQLite or in whatever way you
 want. Make sure to send as little data through the network as possible.
 
