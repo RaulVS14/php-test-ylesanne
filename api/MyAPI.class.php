@@ -1,6 +1,6 @@
 <?php
 require_once 'API.class.php';
-require_once 'db.class.php';
+require_once '../database/db.class.php';
 
 class MyAPI extends API
 {
