@@ -44,6 +44,7 @@ $err = curl_error($curl);
 			text-decoration: none;
 			color: #333;
 		}
+
 		#header{
 			text-align: center;
 			padding: 20px 0;
@@ -59,6 +60,11 @@ $err = curl_error($curl);
 			border: 1px solid black;
 			border-radius: 5px;
 			padding: 10px;
+		}
+		#header a:hover{
+			border-color: #c3c3c3;
+			background: #c3c3c3;
+			color: white;
 		}
 		.container{
 			width: 100%;
@@ -88,7 +94,10 @@ $err = curl_error($curl);
 <body>
 <div id="header">
 	<h1>Saved search results</h1>
-	<a href="<?=$_SERVER['REQUEST_URI']?>/wikipediaRetrievalScript.php">Run the script</a>
+	<div>
+		<a href="<?=$_SERVER['REQUEST_URI']?>/wikipediaSaveScript.php">Run the save script</a>
+		<a href="<?=$_SERVER['REQUEST_URI']?>/wikipediaUpdateScript.php">Run the update script</a>
+	</div>
 </div>
 <div class="container">
 	<?php if(empty($displayData)){?>

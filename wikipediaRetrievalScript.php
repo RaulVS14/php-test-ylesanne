@@ -23,24 +23,6 @@ function getWikiData($offset = 0, $limit = 500, $search = "Tartu")
     return json_decode($response);
 }
 
-// SEND DATA TO REMOTE API, MyAPI
-function postData($data, $type = "save")
-{
-    $sendCurl = curl_init();
-    $payload = json_encode($data);
-    curl_setopt($sendCurl, CURLOPT_URL, $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] . "api/" . $type . "Data");
-    curl_setopt($sendCurl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-    curl_setopt($sendCurl, CURLOPT_POST, 1);
-    curl_setopt($sendCurl, CURLOPT_POSTFIELDS, $payload);
-    curl_setopt($sendCurl, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($sendCurl);
-    curl_close($sendCurl);
-
-    if ($response) {
-        return $response;
-    }
-}
-
 // RETRIEVE ALL RESULTS FROM WIKIPEDIA API
 function getAllArticles()
 {
@@ -65,47 +47,23 @@ function getAllArticles()
     return $results;
 }
 
-// SEND ALL DATA FOR SAVING TO REMOTE API, MyAPI
-function sendAllData($res)
+// SEND DATA TO REMOTE API, MyAPI
+function postData($data, $type = "save")
 {
-    echo "<br>===================== SENDING DATA FOR SAVING ====================<br>";
-    for ($i = 0; $i < count($res); $i++) {
-        echo "Sending data to API - " . count($res[$i]) . " articles - ";
-        $result = postData($res[$i]);
-        $resultJSON = json_decode($result);
-        echo "- RECEIVED - " . $resultJSON->received_size;
-        if ($resultJSON->success) {
-            echo "SUCCESS! Articles saved " . $resultJSON->rows_updated;
-        } else {
-            echo "SAVING UNSUCCESSFUL!";
-        }
-        echo "<br>";
+    $sendCurl = curl_init();
+    $payload = json_encode($data);
+    curl_setopt($sendCurl, CURLOPT_URL, $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] . "api/" . $type . "Data");
+    curl_setopt($sendCurl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($sendCurl, CURLOPT_POST, 1);
+    curl_setopt($sendCurl, CURLOPT_POSTFIELDS, $payload);
+    curl_setopt($sendCurl, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($sendCurl);
+    curl_close($sendCurl);
+
+    if ($response) {
+        return $response;
     }
 }
-
-// SEND ALL DATA FOR SAVING TO UPDATE API, MyAPI
-function updateAllData($res)
-{
-    echo "<br>===================== SENDING DATA FOR UPDATE ====================<br>";
-    for ($i = 0; $i < count($res); $i++) {
-        echo "Sending data to API - " . count($res[$i]) . " articles - ";
-        $result = postData($res[$i], "update");
-        $resultJSON = json_decode($result);
-        echo "- RECEIVED - " . $resultJSON->received_size;
-        if ($resultJSON->success) {
-            echo "SUCCESS! Articles updated " . $resultJSON->rows_updated;
-        } else {
-            echo "UPDATE UNSUCCESSFUL!";
-        }
-        echo "<br>";
-    }
-}
-
-
-// FUNCTION CALLS
-$results = getAllArticles();
-sendAllData($results);
-updateAllData($results);
 
 ?>
 <style>
@@ -127,5 +85,4 @@ updateAllData($results);
 		border-color: #c3c3c3;
 	}
 </style>
-<?php var_dump($_SERVER) ?>
 <a href="/php-test-ylesanne">&laquo; Back to saved results</a>
