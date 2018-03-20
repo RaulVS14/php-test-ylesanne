@@ -8,14 +8,16 @@ abstract class API
     protected $args = Array();
     protected $file = Null;
 
-    /**
+    /*
      * API constructor.
      */
     public function __construct($request)
     {
+        // Set Headers for API
         header("Access-Control-Allow-Origin: *");
         header("Access-Control-Allow-Methods: *");
         header("Content-Type: application/json");
+
         $this->args = explode('/', rtrim($request, '/'));
         $this->endpoint = array_shift($this->args);
         if (array_key_exists(0, $this->args) && !is_numeric($this->args[0])) {
@@ -23,6 +25,7 @@ abstract class API
         }
 
         $this->method = $_SERVER['REQUEST_METHOD'];
+
         if ($this->method == 'POST' && array_key_exists('HTTP_X_HTTP_METHOD', $_SERVER)) {
             if ($_SERVER['HTTP_X_HTTP_METHOD'] == 'DELETE') {
                 $this->method = 'DELETE';
@@ -32,6 +35,7 @@ abstract class API
                 throw new Exception("Unexpected Header");
             }
         }
+
         switch ($this->method) {
             case 'DELETE':
             case 'POST':
@@ -51,6 +55,10 @@ abstract class API
         }
     }
 
+    /*
+     * Public function for processing endpoints
+     */
+
     public function processAPI()
     {
         if (method_exists($this, $this->endpoint)) {
@@ -59,6 +67,10 @@ abstract class API
         return $this->_response("No Endpoint: $this->endpoint", 404);
     }
 
+
+    /*
+     * PRIVATE FUNCTIONS
+     */
     private function _response($data, $status = 200)
     {
         header("HTTP/1.1" . $status . " " . $this->_requestStatus($status));

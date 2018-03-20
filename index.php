@@ -1,4 +1,6 @@
 <?php
+
+// CREATE CONNECTION WITH REMOTE API AND RETRIEVE SAVED ARTICLES
 $curl = curl_init();
 curl_setopt_array($curl, array(
     CURLOPT_URL => $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']."api/getData",

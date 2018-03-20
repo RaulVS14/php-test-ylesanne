@@ -1,6 +1,8 @@
 <?php
 
 $results = [];
+
+// RETRIEVE DATA FROM WIKIPEDIA API
 function getWikiData($offset = 0, $limit = 500, $search = "Tartu")
 {
     $curl = curl_init();
@@ -20,7 +22,7 @@ function getWikiData($offset = 0, $limit = 500, $search = "Tartu")
 
     return json_decode($response);
 }
-
+// SEND DATA TO REMOTE API, MyAPI
 function postData($data,$type="save")
 {
     $sendCurl = curl_init();
@@ -38,6 +40,7 @@ function postData($data,$type="save")
     }
 }
 
+// RETRIEVE ALL RESULTS FROM WIKIPEDIA API
 function getAllArticles()
 {
     echo "<br>===================== RETRIEVING DATA ====================<br>";
@@ -60,33 +63,44 @@ function getAllArticles()
     echo "<br> Count of result pages " . count($results);
     return $results;
 }
-
+// SEND ALL DATA FOR SAVING TO REMOTE API, MyAPI
 function sendAllData($res)
 {
-    $result = true;
     echo "<br>===================== SENDING DATA FOR SAVING ====================<br>";
     for($i = 0 ;$i<count($res);$i++) {
         echo "Sending data to API - ".count($res[$i])." articles - ";
         $result = postData($res[$i]);
-        echo "Articles saved ".count(json_decode($result),true);
+        $resultJSON = json_decode($result);
+        echo "- RECEIVED - " . $resultJSON->received_size;
+        if ($resultJSON->success) {
+            echo "SUCCESS! Articles saved ".$resultJSON->rows_updated;
+        } else{
+            echo "SAVING UNSUCCESSFUL!";
+        }
         echo "<br>";
-
     }
 }
 
+// SEND ALL DATA FOR SAVING TO UPDATE API, MyAPI
 function updateAllData($res)
 {
-    $result = true;
     echo "<br>===================== SENDING DATA FOR UPDATE ====================<br>";
     for($i = 0 ;$i<count($res);$i++) {
         echo "Sending data to API - ".count($res[$i])." articles - ";
         $result = postData($res[$i],"update");
-        echo "Articles updated ".count(json_decode($result),true);
+        $resultJSON = json_decode($result);
+        echo "- RECEIVED - " . $resultJSON->received_size;
+        if ($resultJSON->success) {
+            echo "SUCCESS! Articles updated ".$resultJSON->rows_updated;
+        } else{
+            echo "UPDATE UNSUCCESSFUL!";
+        }
         echo "<br>";
-
     }
 }
 
+
+// FUNCTION CALLS
 $results = getAllArticles();
 sendAllData($results);
 updateAllData($results);
