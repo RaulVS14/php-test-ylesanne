@@ -29,7 +29,7 @@ article with term "Tartu":
 ```
 Notice the timestamp field, which says when the article was last edited.
 
-## Task``````
+## Task
 Your goal is to create a PHP program to retrieve all search results for term "Tartu" from Wikipedia and synchronize them into some local storage on a remote machine.
 You will create two programs:
 * a script that retrieves search results from Wikipedia and transmits them to the remote machine.
