@@ -88,15 +88,18 @@ $err = curl_error($curl);
 <body>
 <div id="header">
 	<h1>Saved search results</h1>
-	<a href="<?=$_SERVER['REQUEST_URI']?>/wikipediaRetrievalScript.php">Mine skripti lingile</a>
+	<a href="<?=$_SERVER['REQUEST_URI']?>/wikipediaRetrievalScript.php">Run the script</a>
 </div>
 <div class="container">
+	<?php if(empty($displayData)){?>
+		<p>No results saved in database!</p>
+	<?php } else{ ?>
     <?php $counter = 1;foreach ($displayData as $data): ?>
 		<div class="article">
 			<h2><span><?= $counter++ ?>.</span> <a href="https://en.wikipedia.org/wiki/<?= urlencode(str_replace(' ', '_',$data["title"])) ?>"><?= $data["title"] ?></a></h2>
 			<p><?= $data["snippet"] ?>... <a class="read-more" href="https://en.wikipedia.org/wiki/<?= urlencode(str_replace(' ', '_',$data["title"])) ?>">Read more &raquo;</a></p>
 		</div>
-    <?php endforeach; ?>
+    <?php endforeach;} ?>
 </div>
 </body>
 </html>
